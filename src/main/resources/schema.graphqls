@@ -1,0 +1,32 @@
+type Query {
+    # Get beer by ID
+    beer(id: ID!): Beer
+
+    # List all beers at once
+    allBeers: [Beer!]!
+
+    # Get brewery by ID
+    brewery(id: ID!): Brewery
+
+    # List all breweries at once
+    allBreweries: [Brewery!]!
+}
+
+type Beer {
+    id: ID!
+    name: String!
+    brewery: Brewery
+    abv: Float
+    ibu: Float
+    style: String
+    ounces: Float
+}
+
+type Brewery {
+    id: ID!
+    name: String!
+    beers: [Beer!]!
+    city: String,
+    state: String
+}
+
