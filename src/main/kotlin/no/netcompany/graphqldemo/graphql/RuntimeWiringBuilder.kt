@@ -7,9 +7,7 @@ import no.netcompany.graphqldemo.domain.Beer
 import no.netcompany.graphqldemo.domain.BeerService
 import no.netcompany.graphqldemo.domain.Brewery
 import no.netcompany.graphqldemo.domain.BreweryService
-import org.springframework.stereotype.Component
 
-@Component
 class RuntimeWiringBuilder(
     private val beerService: BeerService,
     private val breweryService: BreweryService

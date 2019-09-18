@@ -1,10 +1,7 @@
 package no.netcompany.graphqldemo.domain
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.io.Resource
-import org.springframework.stereotype.Service
+import java.io.File
 import java.math.BigDecimal
-import javax.annotation.PostConstruct
 
 data class Beer(
     val id: String,
@@ -16,12 +13,10 @@ data class Beer(
     val ounces: BigDecimal?
 )
 
-@Service
 class BeerService(
-    @Value("classpath:data/beers.csv")
-    private val resource: Resource
+    beerMap: Map<String, Beer>
 ) {
-    private lateinit var beers: MutableMap<String, Beer>
+    private val beers = beerMap.toMutableMap()
 
     fun getAllBeers(): MutableCollection<Beer> {
         return beers.values
@@ -44,27 +39,23 @@ class BeerService(
         return beer
     }
 
-    @PostConstruct
-    fun initializeBeers() {
-        beers =
-            resource
-                .file
-                .readLines()
-                .drop(1)
-                .map { line ->
-                    val fields = line.split(",")
-                    Beer(
-                        id = fields[3],
-                        breweryId = fields[6],
-                        name = fields[4],
-                        abv = fields[1].toBigDecimalOrNull(),
-                        ibu = fields[2].toBigDecimalOrNull(),
-                        style = fields[5],
-                        ounces = fields[7].toBigDecimalOrNull()
-                    )
-                }
-                .associateBy(Beer::id)
-                .toMutableMap()
-    }
+}
 
+fun readBeersFromCsvFile(csv: File): Map<String, Beer> {
+    return csv
+        .readLines()
+        .drop(1)
+        .map { line ->
+            val fields = line.split(",")
+            Beer(
+                id = fields[3],
+                breweryId = fields[6],
+                name = fields[4],
+                abv = fields[1].toBigDecimalOrNull(),
+                ibu = fields[2].toBigDecimalOrNull(),
+                style = fields[5],
+                ounces = fields[7].toBigDecimalOrNull()
+            )
+        }
+        .associateBy(Beer::id)
 }

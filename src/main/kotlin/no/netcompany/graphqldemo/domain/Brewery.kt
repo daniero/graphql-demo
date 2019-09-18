@@ -1,9 +1,6 @@
 package no.netcompany.graphqldemo.domain
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.io.Resource
-import org.springframework.stereotype.Service
-import javax.annotation.PostConstruct
+import java.io.File
 
 data class Brewery(
     val id: String,
@@ -12,12 +9,9 @@ data class Brewery(
     val state: String
 )
 
-@Service
 class BreweryService(
-    @Value("classpath:data/breweries.csv")
-    private val resource: Resource
+    private val breweries: Map<String, Brewery>
 ) {
-    private lateinit var breweries: MutableMap<String, Brewery>
 
     fun getBreweryById(id: String): Brewery? {
         return breweries[id]
@@ -27,24 +21,20 @@ class BreweryService(
         return breweries.values.toSet()
     }
 
-    @PostConstruct
-    fun initializeBreweries() {
-        breweries =
-            resource
-                .file
-                .readLines()
-                .drop(1)
-                .map { line ->
-                    val fields = line.split(",")
-                    Brewery(
-                        id = fields[4],
-                        name = fields[1],
-                        city = fields[2],
-                        state = fields[3]
-                    )
-                }
-                .associateBy(Brewery::id)
-                .toMutableMap()
-    }
+}
 
+fun readBreweriesFromCsvFile(csv: File): Map<String, Brewery> {
+    return csv
+        .readLines()
+        .drop(1)
+        .map { line ->
+            val fields = line.split(",")
+            Brewery(
+                id = fields[4],
+                name = fields[1],
+                city = fields[2],
+                state = fields[3]
+            )
+        }
+        .associateBy(Brewery::id)
 }

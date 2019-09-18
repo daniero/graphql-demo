@@ -30,3 +30,14 @@ type Brewery {
     state: String
 }
 
+input BeerInput {
+    name: String!
+    brewery: String!
+}
+
+type Mutation {
+    # Add a new beer
+    addBeer(input: BeerInput!): Beer!
+    # Change an existing beer
+    editBeer(beerId: ID!, input: BeerInput!): Beer!
+}
