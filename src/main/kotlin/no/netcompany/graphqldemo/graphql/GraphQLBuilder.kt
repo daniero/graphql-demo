@@ -4,30 +4,16 @@ import graphql.GraphQL
 import graphql.schema.GraphQLSchema
 import graphql.schema.idl.SchemaGenerator
 import graphql.schema.idl.SchemaParser
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Bean
-import org.springframework.core.io.Resource
-import org.springframework.stereotype.Component
-import javax.annotation.PostConstruct
 
 
-@Component
-class GraphQLProvider(
-    @Value("classpath:schema.graphqls")
-    private val schemaResource: Resource,
+class GraphQLBuilder(
     private val runtimeWiringBuilder: RuntimeWiringBuilder
 ) {
-    private lateinit var graphQL: GraphQL
 
-    @Bean
-    fun graphQL() = graphQL
-
-    @PostConstruct
-    fun init() {
-        val schema = schemaResource.file.readText(Charsets.UTF_8)
+    fun build(schema: String): GraphQL {
         val graphQLSchema = buildSchema(schema)
 
-        this.graphQL = GraphQL
+        return GraphQL
             .newGraphQL(graphQLSchema)
             .build()
     }

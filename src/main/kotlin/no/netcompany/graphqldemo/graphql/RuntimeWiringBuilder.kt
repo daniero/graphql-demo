@@ -3,13 +3,11 @@ package no.netcompany.graphqldemo.graphql
 import graphql.schema.idl.RuntimeWiring
 import graphql.schema.idl.RuntimeWiring.newRuntimeWiring
 import graphql.schema.idl.TypeRuntimeWiring.newTypeWiring
-import no.netcompany.graphqldemo.domain.Beer
-import no.netcompany.graphqldemo.domain.BeerService
-import no.netcompany.graphqldemo.domain.Brewery
-import no.netcompany.graphqldemo.domain.BreweryService
-import org.springframework.stereotype.Component
+import no.netcompany.graphqldemo.businesslogic.Beer
+import no.netcompany.graphqldemo.businesslogic.BeerService
+import no.netcompany.graphqldemo.businesslogic.Brewery
+import no.netcompany.graphqldemo.businesslogic.BreweryService
 
-@Component
 class RuntimeWiringBuilder(
     private val beerService: BeerService,
     private val breweryService: BreweryService
