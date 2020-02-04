@@ -1,0 +1,9 @@
+.item:hover {
+  background-color: var(--gray);
+  color: var(--dark);
+}
+
+.item.selected {
+  font-weight: bold;
+  color: var(--light)
+}
