@@ -4,3 +4,7 @@ pluginManagement {
 	}
 }
 rootProject.name = 'graphql-demo'
+
+include 'beer-backend'
+include 'beer-frontend'
+

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.Resource
 
 @Configuration
-open class DataSources(
+open class AppConfiguration(
     @Value("classpath:data/beers.csv") private val beerResource: Resource,
     @Value("classpath:data/breweries.csv") private val breweryResource: Resource
 ) {
